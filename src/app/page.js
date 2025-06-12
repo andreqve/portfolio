@@ -160,7 +160,7 @@ export default function Home() {
         <div className="flex-1 min-w-[280px]">
           <h2 className="text-2xl font-bold mb-3 text-white">About Me</h2>
           <p className="text-gray-200 text-lg leading-relaxed">
-            Hi! I'm Andre, a digital marketer and Google Sheets creator passionate about helping others work smarter with technology and automation.<br /><br />
+            Hi! I&apos;m Andre, a digital marketer and Google Sheets creator passionate about helping others work smarter with technology and automation.<br /><br />
             With hands-on experience in campaign management, product strategy, and SaaS, I love creating simple and effective solutions for productivity.<br /><br />
             My Google Sheets templates have empowered over 35,000 users, while my marketing work spans analytics, content, and growth for startups and creative businesses.
           </p>
