@@ -1,5 +1,9 @@
 'use client';
 import { useRef } from "react";
+import 'keen-slider/keen-slider.min.css';
+import { useState } from "react";
+import { useKeenSlider } from "keen-slider/react";
+import { motion } from "framer-motion";
 import Image from 'next/image';
 import {
   FaMoneyBillWave, FaHashtag, FaMobileAlt, FaBullhorn, FaRegFileAlt,
@@ -37,22 +41,23 @@ const featuredTemplates = [
   {
     title: "Money Management Template",
     desc: "Manage your finances easily, track income, expenses, and savings. Used by 20K+ users!",
-    icon: "/image/template1.webp",
+    images: ["/image/budget1.png", "/image/budget2.png", "/image/budget3.png"],
     link: "https://template.andre.id/koleksi/template-budgeting-google-sheet"
   },
   {
     title: "Project Management Template",
     desc: "Organize projects, track progress, and collaborate with your team seamlessly.",
-    icon: "/image/template2.webp",
+    images: ["/image/project1.png", "/image/project2.png", "/image/project3.png"],
     link: "https://template.andre.id/koleksi/template-project-management"
   },
   {
     title: "Wedding Preparation Template",
     desc: "Everything you need to plan your wedding with less stress, from budgeting to checklists.",
-    icon: "/image/template3.webp",
+    images: ["/image/wedding1.png", "/image/wedding2.png", "/image/wedding3.png"],
     link: "https://template.andre.id/koleksi/template-persiapan-pernikahan"
   }
 ];
+
 
 const usefulLinks = [
   {
@@ -92,6 +97,55 @@ const usefulLinks = [
     href: "https://andre.id/go/weekend/"
   },
 ];
+
+function TemplateSlider({ images }) {
+  const [current, setCurrent] = useState(0);
+  const [sliderRef, instanceRef] = useKeenSlider({
+    slideChanged(s) {
+      setCurrent(s.track.details.rel);
+    },
+    loop: true,
+    mode: "free-snap",
+  });
+
+  return (
+    <div className="w-full max-w-[440px] mx-auto keen-slider aspect-[1600/1700] rounded-2xl overflow-hidden shadow-lg">
+      <div ref={sliderRef} className="keen-slider">
+        {images.map((src, i) => (
+          <div key={i} className="keen-slider__slide flex items-center justify-center">
+            <Image
+              src={src}
+              alt={`Template preview ${i + 1}`}
+              width={800}
+              height={900}
+              className="w-full h-full object-cover rounded-2xl shadow-xl transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+              draggable="false"
+              style={{
+                maxHeight: "350px",
+                minHeight: "300px",
+                background: "#1a202c"
+              }}
+            />
+          </div>
+        ))}
+      </div>
+      {/* Navigation dots */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            className={`w-3 h-3 rounded-full border-2 border-[#00b88c] ${current === i ? 'bg-[#00b88c]' : 'bg-zinc-700'} transition`}
+            onClick={() => instanceRef.current?.moveToIdx(i)}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
 
 export default function Home() {
   const confettiTimeout = useRef(null);
@@ -178,21 +232,83 @@ export default function Home() {
         </div>
       </section>
 
+      {/* --- Professional Journey Timeline Section --- */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 pt-16 pb-8 mb-16">
         <h2 className="text-4xl font-bold mb-12 text-center">Professional Journey</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16 md:gap-y-12 md:gap-x-6">
+
+        {/* Mobile Timeline */}
+        <div className="flex flex-col md:hidden relative pl-0"> {/* <= Padding kiri langsung 0, agar sejajar judul section */}
+          {experiences.map((exp, idx) => {
+            const isRecent = idx === 0;
+            return (
+              <div key={exp.title} className="flex items-start min-h-[98px]">
+                {/* Timeline */}
+                <div className="flex flex-col items-center">
+                  {/* Dot & Icon (LEBIH BESAR) */}
+                  <span
+                    className="w-16 h-16 rounded-full border-2 flex items-center justify-center shadow-lg"
+                    style={{
+                      background: isRecent ? "#232829" : "#181A1B",
+                      borderColor: exp.color,
+                      color: exp.color,
+                      zIndex: 2,
+                      marginTop: idx === 0 ? "0" : "-4px",
+                      fontSize: "2.45rem" // icon besar
+                    }}
+                  >
+                    {exp.icon}
+                  </span>
+                  {/* Timeline Line */}
+                  {idx !== experiences.length - 1 && (
+                    <div
+                      className="w-1"
+                      style={{
+                        background: "#454545",
+                        minHeight: "68px",
+                        marginTop: "-2px",
+                        marginBottom: "-2px",
+                      }}
+                    />
+                  )}
+                </div>
+                {/* Info */}
+                <div className="ml-7 flex-1 py-1">
+                  <div
+                    className="font-bold text-[1.3rem] mb-1 leading-tight"
+                    style={{ color: isRecent ? exp.color : "#fff" }}
+                  >
+                    {exp.title}
+                  </div>
+                  <div className="text-[#adb5bd] text-[1.08rem] leading-snug">{exp.company}</div>
+                  <div className="text-[#72787e] text-[0.97rem] leading-tight">{exp.year}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+
+
+        {/* Desktop Grid */}
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-y-16 md:gap-y-12 md:gap-x-6">
           {experiences.map((exp) => (
-            <div key={exp.title} className="flex flex-col items-center justify-center">
+            <div
+              key={exp.title}
+              className="flex flex-col items-center justify-center bg-zinc-900/80 rounded-2xl shadow-xl border border-zinc-800 hover:border-[#00b88c] transition-all hover:scale-105 group p-7"
+            >
               <div className="mb-3">
-                <span className="inline-flex items-center justify-center w-16 h-16 rounded-full shadow-lg"
+                <span
+                  className="inline-flex items-center justify-center w-16 h-16 rounded-full shadow-lg group-hover:shadow-2xl"
                   style={{
                     background: `radial-gradient(circle at 60% 40%, ${exp.color}55 60%, #181A1B 100%)`,
-                    border: `2.5px solid ${exp.color}`
-                  }}>
+                    border: `2.5px solid ${exp.color}`,
+                    color: exp.color
+                  }}
+                >
                   <span className="text-3xl">{exp.icon}</span>
                 </span>
               </div>
-              <div className="text-xl font-bold text-white text-center">{exp.title}</div>
+              <div className="text-xl font-bold text-white text-center group-hover:text-[#00b88c] transition">{exp.title}</div>
               <div className="text-md text-[#adb5bd] text-center">{exp.company}</div>
               <div className="text-sm text-[#72787e] text-center">{exp.year}</div>
             </div>
@@ -200,58 +316,133 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="max-w-5xl mx-auto px-2 md:px-4 py-8 md:py-12 mb-12">
-        <div className="relative bg-zinc-900/70 rounded-3xl shadow-2xl border-l-4 md:border-l-6 border-[#46bdc6] px-5 md:px-12 py-8 md:py-12">
-          <span className="absolute -left-5 top-6 text-2xl md:text-4xl select-none pointer-events-none hidden md:block">📝</span>
-          <h3 className="font-handwriting text-2xl md:text-4xl font-bold text-[#46bdc6] mb-4 tracking-tight">
+      {/* Section: Story 35.000 */}
+      <section className="max-w-3xl md:max-w-4xl mx-auto px-4 py-12 mb-14">
+        <div className="flex items-center gap-3 mb-7">
+          <span className="text-3xl md:text-4xl drop-shadow-md">📝</span>
+          <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-[#00b88c] leading-tight">
             How a Simple Habit Became 35,000+ Solutions
           </h3>
-          <div className="text-gray-200 text-lg leading-relaxed">
-            <p>
-              My professional journey began in 2015, coming from a small town to Jakarta to chase bigger work opportunities. In my early years, my salary barely covered daily expenses. It forced me to rethink how to manage my limited money, hoping to save even a small portion each month.
-            </p>
-            <br />
-            <p>
-              By 2018, I started tracking every little expense in a rough Google Sheet. Year after year, this practice grew with my career, and as my income increased, so did my savings and my spreadsheet! Friends and colleagues started asking for my “template” when I shared money management tips on Twitter.
-            </p>
-            <br />
-            <p>
-              That messy sheet evolved into the very first template I shared with the public. Since then, I’ve kept creating and sharing templates to help others solve real problems, save time, and organize their work and life more easily.
-            </p>
-            <br />
-            <p>
-              Here are a few of the templates people found most useful, built from experience and real user feedback. Hope they help you as much as they helped me!
-            </p>
-          </div>
+        </div>
+        <div className="relative rounded-3xl bg-zinc-900/70 border-2 border-dotted border-[#00b88c] px-6 md:px-14 py-9 shadow-xl backdrop-blur-md">
+          {[
+            <>
+              My professional journey began in 2015, coming from a small town to Jakarta to
+              <span
+                style={{
+                  background:
+                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
+                  borderRadius: "0.4em",
+                  padding: "0 0.16em",
+                  display: "inline",
+                  marginLeft: "4px",
+                  marginRight: "4px",
+                }}
+                className="font-semibold"
+              >
+                chase bigger work opportunities
+              </span>
+              . In my early years, my salary barely covered daily expenses. It forced me to rethink how to manage my limited money, hoping to save even a small portion each month.
+            </>,
+            <>
+              By 2018, I started
+              <span
+                style={{
+                  background:
+                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
+                  borderRadius: "0.4em",
+                  padding: "0 0.16em",
+                  display: "inline",
+                  marginLeft: "4px",
+                  marginRight: "4px",
+                }}
+                className="font-semibold"
+              >
+                tracking every little expense
+              </span>
+              in a rough Google Sheet. Year after year, this practice grew with my career, and as my income increased, so did my savings and my spreadsheet! Friends and colleagues started asking for my “template” when I shared money management tips on Twitter.
+            </>,
+            <>
+              That messy sheet evolved into the
+              <span
+                style={{
+                  background:
+                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
+                  borderRadius: "0.4em",
+                  padding: "0 0.16em",
+                  display: "inline",
+                  marginLeft: "4px",
+                  marginRight: "4px",
+                }}
+                className="font-semibold"
+              >
+                very first template I shared
+              </span>
+              with the public. Since then, I’ve kept creating and sharing templates to help others solve real problems, save time, and organize their work and life more easily.
+            </>,
+            <>
+              Here are a few of the
+              <span
+                style={{
+                  background:
+                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
+                  borderRadius: "0.4em",
+                  padding: "0 0.16em",
+                  display: "inline",
+                  marginLeft: "4px",
+                  marginRight: "4px",
+                }}
+                className="font-semibold"
+              >
+                templates people found most useful
+              </span>
+              , built from experience and real user feedback. Hope they help you as much as they helped me!
+            </>
+          ].map((txt, i) => (
+            <motion.p
+              key={i}
+              className="text-gray-200 text-lg md:text-xl leading-relaxed mb-7 last:mb-0"
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.18, duration: 0.62, ease: "easeOut" }}
+            >
+              {txt}
+            </motion.p>
+          ))}
         </div>
       </section>
 
+
+
+
       <section className="max-w-6xl mx-auto mb-16 px-2 md:px-4">
-        <h2 className="text-3xl font-bold mb-4 text-center">Featured Templates</h2>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {featuredTemplates.map((tpl, i) => (
-            <a
-              href={tpl.link}
-              target="_blank"
-              rel="noopener noreferrer"
+        <h2 className="text-3xl font-bold mb-8 text-center">Featured Templates</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-10 max-w-5xl mx-auto">
+          {featuredTemplates.map((tpl, idx) => (
+            <div
               key={tpl.title}
-              className="bg-[#232829] rounded-2xl shadow-lg hover:scale-105 transition p-4 md:p-6 flex flex-col items-center text-center border border-white hover:border-[#00b88c] min-h-[310px] w-full"
+              className="bg-zinc-900/90 rounded-3xl shadow-xl border border-zinc-800 hover:border-[#ffffff] transition-all duration-200 flex flex-col items-center px-3 py-6 md:py-7 min-h-[460px] group"
             >
-              <Image
-                src={tpl.icon}
-                alt={tpl.title}
-                width={64}
-                height={64}
-                className="w-14 h-14 md:w-16 md:h-16 mb-4 object-contain rounded-xl shadow-md bg-zinc-900"
-                style={{ border: "2px solid #181A1B" }}
-                loading="lazy"
-              />
-              <h3 className="font-semibold text-lg mb-2 text-white">{tpl.title}</h3>
-              <p className="text-gray-400 text-base mb-5 flex-1">{tpl.desc}</p>
-              <span className="inline-block bg-gradient-to-r from-[#46bdc6] to-[#00b88c] px-5 py-2 rounded-full text-sm text-white font-semibold shadow hover:opacity-90 transition">
+              {/* Slider */}
+              <TemplateSlider images={tpl.images} />
+
+              <h3 className="font-semibold text-xl md:text-2xl mt-6 mb-2 text-white text-center">{tpl.title}</h3>
+              <p className="text-gray-400 text-base mb-6 text-center flex-1">{tpl.desc}</p>
+              <a
+                href={tpl.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#46bdc6] to-[#00b88c] px-6 py-3 rounded-full text-base text-white font-bold shadow-lg hover:scale-105 transition focus-visible:outline-none"
+              >
                 View Template
-              </span>
-            </a>
+                {/* Panah miring ke atas */}
+                <svg width="21" height="21" fill="none" viewBox="0 0 24 24" className="ml-1">
+                  <path d="M5 19L19 5M19 5V17M19 5H7" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            </div>
+
           ))}
         </div>
       </section>
@@ -268,7 +459,7 @@ export default function Home() {
               href={l.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#232829] rounded-xl shadow-lg flex flex-col items-center py-7 px-5 hover:scale-105 transition border border-white hover:border-[#46bdc6] min-h-[180px]"
+              className="bg-[#232829] rounded-xl shadow-lg flex flex-col items-center py-7 px-5 hover:scale-105 transition border border-white hover:border-[#fff] min-h-[180px]"
             >
               <div>{l.icon}</div>
               <div className="font-bold mt-3 mb-1 text-lg text-white">{l.title}</div>
