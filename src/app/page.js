@@ -7,8 +7,8 @@ import { motion } from "framer-motion";
 import Image from 'next/image';
 import {
   FaMoneyBillWave, FaHashtag, FaMobileAlt, FaBullhorn, FaRegFileAlt,
-  FaChartLine, FaBlogger, FaProjectDiagram,
-  FaGraduationCap, FaGoogleDrive, FaUtensils, FaClock
+  FaChartLine, FaRegNewspaper, FaProjectDiagram,
+  FaGraduationCap, FaTable, FaUtensils, FaClock
 } from "react-icons/fa";
 
 const BRAND = {
@@ -29,13 +29,50 @@ const skills = [
 ];
 
 const experiences = [
-  { title: "Digital Marketing Lead", company: "KaryaKarsa", year: "2021-Present, Jakarta", color: BRAND.teal, icon: <FaBullhorn /> },
-  { title: "Solution Manager", company: "Epsilo.io", year: "2020, Ho Chi Minh City", color: BRAND.pink, icon: <FaProjectDiagram /> },
-  { title: "App Marketing", company: "Yummycorp", year: "2019, Tangerang", color: BRAND.green, icon: <FaMobileAlt /> },
-  { title: "Performance Marketing", company: "theAsianparent", year: "2018, Jakarta", color: BRAND.yellow, icon: <FaChartLine /> },
-  { title: "Digital & Content", company: "LIGHThouse Indonesia", year: "2016, Jakarta", color: BRAND.teal, icon: <FaHashtag /> },
-  { title: "Content Producer", company: "Cermati", year: "2015, Jakarta", color: BRAND.pink, icon: <FaRegFileAlt /> },
+  {
+    title: "Digital Marketing Lead",
+    company: "KaryaKarsa",
+    year: "2021-Present, Jakarta",
+    color: "#29bbae",
+    icon: <FaBullhorn />
+  },
+  {
+    title: "Solution Manager",
+    company: "Epsilo.io",
+    year: "2020, Ho Chi Minh City",
+    color: "#61b47d",
+    icon: <FaProjectDiagram />
+  },
+  {
+    title: "App Marketing",
+    company: "Yummycorp",
+    year: "2019, Tangerang",
+    color: "#90a753",
+    icon: <FaMobileAlt />
+  },
+  {
+    title: "Performance Marketing",
+    company: "theAsianparent",
+    year: "2018, Jakarta",
+    color: "#bb9440",
+    icon: <FaChartLine />
+  },
+  {
+    title: "Digital & Content",
+    company: "LIGHThouse Indonesia",
+    year: "2016, Jakarta",
+    color: "#dc7b50",
+    icon: <FaHashtag />
+  },
+  {
+    title: "Content Producer",
+    company: "Cermati",
+    year: "2015, Jakarta",
+    color: "#e96479",
+    icon: <FaRegFileAlt />
+  },
 ];
+
 
 const featuredTemplates = [
   {
@@ -67,7 +104,7 @@ const usefulLinks = [
     href: "https://x.com/andreqve/status/1926575381143761246"
   },
   {
-    icon: <FaBlogger size={28} className="text-[#46bdc6]" />,
+    icon: <FaRegNewspaper size={28} className="text-[#46bdc6]" />,
     title: "Personal Blog",
     desc: "Articles, insights, and tips",
     href: "https://andre.id/blog/marketing/"
@@ -79,7 +116,7 @@ const usefulLinks = [
     href: "https://go.andre.id/udemy"
   },
   {
-    icon: <FaGoogleDrive size={28} className="text-[#00b88c]" />,
+    icon: <FaTable size={28} className="text-[#00b88c]" />,
     title: "Google Sheet Templates",
     desc: "30+ best template collections",
     href: "https://template.andre.id/koleksi"
@@ -232,19 +269,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- Professional Journey Timeline Section --- */}
+      {/* Section: Professional Journey */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 pt-16 pb-8 mb-16">
         <h2 className="text-4xl font-bold mb-12 text-center">Professional Journey</h2>
 
         {/* Mobile Timeline */}
-        <div className="flex flex-col md:hidden relative pl-0"> {/* <= Padding kiri langsung 0, agar sejajar judul section */}
+        <div className="flex flex-col md:hidden relative pl-0">
           {experiences.map((exp, idx) => {
             const isRecent = idx === 0;
             return (
               <div key={exp.title} className="flex items-start min-h-[98px]">
-                {/* Timeline */}
                 <div className="flex flex-col items-center">
-                  {/* Dot & Icon (LEBIH BESAR) */}
                   <span
                     className="w-16 h-16 rounded-full border-2 flex items-center justify-center shadow-lg"
                     style={{
@@ -253,7 +288,7 @@ export default function Home() {
                       color: exp.color,
                       zIndex: 2,
                       marginTop: idx === 0 ? "0" : "-4px",
-                      fontSize: "2.45rem" // icon besar
+                      fontSize: "2.45rem"
                     }}
                   >
                     {exp.icon}
@@ -294,7 +329,7 @@ export default function Home() {
           {experiences.map((exp) => (
             <div
               key={exp.title}
-              className="flex flex-col items-center justify-center bg-zinc-900/80 rounded-2xl shadow-xl border border-zinc-800 hover:border-[#00b88c] transition-all hover:scale-105 group p-7"
+              className="flex flex-col items-center justify-center bg-zinc-900/80 rounded-2xl shadow-xl border border-zinc-700 hover:border-[#00b88c] transition-all hover:scale-105 group p-7"
             >
               <div className="mb-3">
                 <span
@@ -413,16 +448,14 @@ export default function Home() {
         </div>
       </section>
 
-
-
-
+      {/* Section: Featured Templates */}
       <section className="max-w-6xl mx-auto mb-16 px-2 md:px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">Featured Templates</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-10 max-w-5xl mx-auto">
           {featuredTemplates.map((tpl, idx) => (
             <div
               key={tpl.title}
-              className="bg-zinc-900/90 rounded-3xl shadow-xl border border-zinc-800 hover:border-[#ffffff] transition-all duration-200 flex flex-col items-center px-3 py-6 md:py-7 min-h-[460px] group"
+              className="bg-zinc-900/90 rounded-3xl shadow-xl border border-zinc-600 hover:border-[#ffffff] transition-all duration-200 flex flex-col items-center px-3 py-6 md:py-7 min-h-[460px] group"
             >
               {/* Slider */}
               <TemplateSlider images={tpl.images} />
@@ -447,6 +480,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section: Useful Links */}
       <section className="max-w-5xl mx-auto px-4 pb-16 mb-8">
         <h2 className="text-3xl font-bold mb-4 text-center">Useful Links</h2>
         <p className="text-gray-300 text-center mb-8 text-lg">
@@ -459,7 +493,7 @@ export default function Home() {
               href={l.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#232829] rounded-xl shadow-lg flex flex-col items-center py-7 px-5 hover:scale-105 transition border border-white hover:border-[#fff] min-h-[180px]"
+              className="bg-[#232829] rounded-xl shadow-lg flex flex-col items-center py-7 px-5 hover:scale-105 transition border border-zinc-600 hover:border-[#fff] min-h-[180px]"
             >
               <div>{l.icon}</div>
               <div className="font-bold mt-3 mb-1 text-lg text-white">{l.title}</div>
@@ -469,10 +503,30 @@ export default function Home() {
         </div>
       </section>
 
-      <hr className="border-t border-zinc-700 max-w-5xl mx-auto mb-8" />
-      <footer className="py-8 text-center text-gray-500 text-sm">
-        © {new Date().getFullYear()} Andre. Made with Next.js & ❤️
+      <hr className="border-t border-zinc-700 max-w-5xl mx-auto mb-2" />
+      <footer className="py-8 flex flex-col items-center gap-2 text-center">
+        <div className="flex flex-wrap gap-4 items-center justify-center mb-1 text-base font-semibold">
+          <a
+            href="mailto:hai@andre.id"
+            className="hover:underline text-white/90 transition"
+          >
+            Send Email
+          </a>
+          <span className="text-zinc-400 select-none">•</span>
+          <a
+            href="https://www.linkedin.com/in/petrusandre"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline text-[#46bdc6] transition"
+          >
+            Connect LinkedIn
+          </a>
+        </div>
+        <div className="text-gray-500 text-xs mt-1">
+          © {new Date().getFullYear()} Andre. Made with Next.js & ❤️
+        </div>
       </footer>
+
     </main>
   );
 }
