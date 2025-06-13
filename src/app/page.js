@@ -98,28 +98,16 @@ const featuredTemplates = [
 
 const usefulLinks = [
   {
-    icon: <FaMoneyBillWave size={28} className="text-[#e96479]" />,
+    icon: <FaMoneyBillWave size={28} className="text-[#00b88c]" />,
     title: "Unreleased SaaS",
     desc: "Money managament web app",
     href: "https://x.com/andreqve/status/1926575381143761246"
   },
   {
-    icon: <FaRegNewspaper size={28} className="text-[#46bdc6]" />,
-    title: "Personal Blog",
-    desc: "Articles, insights, and tips",
-    href: "https://andre.id/blog/marketing/"
-  },
-  {
-    icon: <FaGraduationCap size={28} className="text-[#fdd36a]" />,
+    icon: <FaGraduationCap size={28} className="text-[#892de1]" />,
     title: "Free Udemy Courses",
     desc: "Learn new skills for free",
     href: "https://go.andre.id/udemy"
-  },
-  {
-    icon: <FaTable size={28} className="text-[#00b88c]" />,
-    title: "Google Sheet Templates",
-    desc: "30+ best template collections",
-    href: "https://template.andre.id/koleksi"
   },
   {
     icon: <FaUtensils size={28} className="text-[#fdd36a]" />,
@@ -128,10 +116,22 @@ const usefulLinks = [
     href: "https://go.andre.id/tempatmakan"
   },
   {
+    icon: <FaRegNewspaper size={28} className="text-[#58b1da]" />,
+    title: "Personal Blog",
+    desc: "Articles, insights, and tips",
+    href: "https://andre.id/blog/marketing/"
+  },
+  {
     icon: <FaClock size={28} className="text-[#e96479]" />,
     title: "Weekend Timer",
     desc: "Countdown to your next weekend",
     href: "https://andre.id/go/weekend/"
+  },
+  {
+    icon: <FaTable size={28} className="text-[#34a853]" />,
+    title: "Google Sheet Templates",
+    desc: "30+ best template collections",
+    href: "https://template.andre.id/koleksi"
   },
 ];
 
@@ -517,7 +517,7 @@ export default function Home() {
             href="https://www.linkedin.com/in/petrusandre"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline text-[#46bdc6] transition"
+            className="hover:underline text-white/90 transition"
           >
             Connect LinkedIn
           </a>
