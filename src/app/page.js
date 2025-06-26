@@ -99,9 +99,9 @@ const featuredTemplates = [
 const usefulLinks = [
   {
     icon: <FaMoneyBillWave size={28} className="text-[#00b88c]" />,
-    title: "Unreleased SaaS",
+    title: "Monsy.app",
     desc: "Money managament web app",
-    href: "https://x.com/andreqve/status/1926575381143761246"
+    href: "https://www.monsy.app"
   },
   {
     icon: <FaGraduationCap size={28} className="text-[#892de1]" />,
