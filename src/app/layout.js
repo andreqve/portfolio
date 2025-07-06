@@ -49,6 +49,10 @@ export const metadata = {
     description:
       "Digital marketer, SaaS builder, and Google Sheets expert. Discover top templates, marketing experience, and more.",
     images: ["https://andre.id/image/andre.jpg"]
+  },
+  // Tambahkan bagian ini:
+  other: {
+    "google-site-verification": "IamODqoYpyicMTnNcgn31-3Y3s939AZs4mmt6L7r8DU"
   }
 };
 
