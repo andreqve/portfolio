@@ -1,9 +1,4 @@
-'use client';
-import { useRef } from "react";
-import 'keen-slider/keen-slider.min.css';
-import { useState } from "react";
-import { useKeenSlider } from "keen-slider/react";
-import { motion } from "framer-motion";
+// File: src/app/page.js (Final Updated)
 import Image from 'next/image';
 import {
   FaMoneyBillWave, FaHashtag, FaMobileAlt, FaBullhorn, FaRegFileAlt,
@@ -11,12 +6,10 @@ import {
   FaGraduationCap, FaTable, FaUtensils, FaClock
 } from "react-icons/fa";
 
-const BRAND = {
-  teal: '#46bdc6',
-  green: '#00b88c',
-  yellow: '#fdd36a',
-  pink: '#e96479',
-};
+// Import komponen klien yang baru dibuat
+import ConfettiButton from "@/components/ConfettiButton";
+import TemplateSlider from "@/components/TemplateSlider";
+import StorySection from "@/components/StorySection"; // <-- Tambahkan impor ini
 
 const skills = [
   "10+ years in digital & performance marketing",
@@ -135,73 +128,8 @@ const usefulLinks = [
   },
 ];
 
-function TemplateSlider({ images }) {
-  const [current, setCurrent] = useState(0);
-  const [sliderRef, instanceRef] = useKeenSlider({
-    slideChanged(s) {
-      setCurrent(s.track.details.rel);
-    },
-    loop: true,
-    mode: "free-snap",
-  });
-
-  return (
-    <div className="w-full max-w-[440px] mx-auto keen-slider aspect-[1600/1700] rounded-2xl overflow-hidden shadow-lg">
-      <div ref={sliderRef} className="keen-slider">
-        {images.map((src, i) => (
-          <div key={i} className="keen-slider__slide flex items-center justify-center">
-            <Image
-              src={src}
-              alt={`Template preview ${i + 1}`}
-              width={800}
-              height={900}
-              className="w-full h-full object-cover rounded-2xl shadow-xl transition-transform duration-300 group-hover:scale-105"
-              loading="lazy"
-              draggable="false"
-              style={{
-                maxHeight: "350px",
-                minHeight: "300px",
-                background: "#1a202c"
-              }}
-            />
-          </div>
-        ))}
-      </div>
-      {/* Navigation dots */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            className={`w-3 h-3 rounded-full border-2 border-[#00b88c] ${current === i ? 'bg-[#00b88c]' : 'bg-zinc-700'} transition`}
-            onClick={() => instanceRef.current?.moveToIdx(i)}
-            aria-label={`Go to slide ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-
 
 export default function Home() {
-  const confettiTimeout = useRef(null);
-
-  const handleConfetti = async () => {
-    if (confettiTimeout.current) clearTimeout(confettiTimeout.current);
-    const confetti = (await import('canvas-confetti')).default;
-    confetti({
-      particleCount: 70,
-      spread: 80,
-      origin: { y: 0.7 },
-      colors: [BRAND.teal, BRAND.green, BRAND.yellow, BRAND.pink],
-      scalar: 1.2,
-    });
-    confettiTimeout.current = setTimeout(() => {
-      confettiTimeout.current = null;
-    }, 300);
-  };
-
   return (
     <main className="min-h-screen font-sans bg-gradient-to-b from-zinc-950 to-zinc-800 relative text-white">
       <div className="pointer-events-none absolute inset-0 z-0">
@@ -223,17 +151,9 @@ export default function Home() {
         <p className="text-lg mb-2 text-gray-200 text-center">
           Digital Marketer & Google Sheets Templates Creator
         </p>
-        <span
-          className="inline-block mt-2 mb-4 px-6 py-2 rounded-full font-semibold text-white text-base cursor-pointer select-none transition hover:scale-105 shadow"
-          style={{ background: "linear-gradient(90deg, #46bdc6 0%, #00b88c 100%)" }}
-          onClick={handleConfetti}
-          onMouseEnter={handleConfetti}
-          tabIndex={0}
-          role="button"
-          aria-label="Celebrate productivity"
-        >
-          Helping 35,000+ users be more productive
-        </span>
+        
+        <ConfettiButton />
+
         <a
           href="https://x.com/andreqve"
           target="_blank"
@@ -293,7 +213,6 @@ export default function Home() {
                   >
                     {exp.icon}
                   </span>
-                  {/* Timeline Line */}
                   {idx !== experiences.length - 1 && (
                     <div
                       className="w-1"
@@ -306,7 +225,6 @@ export default function Home() {
                     />
                   )}
                 </div>
-                {/* Info */}
                 <div className="ml-7 flex-1 py-1">
                   <div
                     className="font-bold text-[1.3rem] mb-1 leading-tight"
@@ -321,8 +239,6 @@ export default function Home() {
             );
           })}
         </div>
-
-
 
         {/* Desktop Grid */}
         <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-y-16 md:gap-y-12 md:gap-x-6">
@@ -351,113 +267,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section: Story 35.000 */}
-      <section className="max-w-3xl md:max-w-4xl mx-auto px-4 py-12 mb-14">
-        <div className="flex items-center gap-3 mb-7">
-          <span className="text-3xl md:text-4xl drop-shadow-md">📝</span>
-          <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-[#00b88c] leading-tight">
-            How a Simple Habit Became 35,000+ Solutions
-          </h3>
-        </div>
-        <div className="relative rounded-3xl bg-zinc-900/70 border-2 border-dotted border-[#00b88c] px-6 md:px-14 py-9 shadow-xl backdrop-blur-md">
-          {[
-            <>
-              My professional journey began in 2015, coming from a small town to Jakarta to
-              <span
-                style={{
-                  background:
-                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
-                  borderRadius: "0.4em",
-                  padding: "0 0.16em",
-                  display: "inline",
-                  marginLeft: "4px",
-                  marginRight: "4px",
-                }}
-                className="font-semibold"
-              >
-                chase bigger work opportunities
-              </span>
-              . In my early years, my salary barely covered daily expenses. It forced me to rethink how to manage my limited money, hoping to save even a small portion each month.
-            </>,
-            <>
-              By 2018, I started
-              <span
-                style={{
-                  background:
-                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
-                  borderRadius: "0.4em",
-                  padding: "0 0.16em",
-                  display: "inline",
-                  marginLeft: "4px",
-                  marginRight: "4px",
-                }}
-                className="font-semibold"
-              >
-                tracking every little expense
-              </span>
-              in a rough Google Sheet. Year after year, this practice grew with my career, and as my income increased, so did my savings and my spreadsheet! Friends and colleagues started asking for my “template” when I shared money management tips on Twitter.
-            </>,
-            <>
-              That messy sheet evolved into the
-              <span
-                style={{
-                  background:
-                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
-                  borderRadius: "0.4em",
-                  padding: "0 0.16em",
-                  display: "inline",
-                  marginLeft: "4px",
-                  marginRight: "4px",
-                }}
-                className="font-semibold"
-              >
-                very first template I shared
-              </span>
-              with the public. Since then, I’ve kept creating and sharing templates to help others solve real problems, save time, and organize their work and life more easily.
-            </>,
-            <>
-              Here are a few of the
-              <span
-                style={{
-                  background:
-                    "linear-gradient(90deg, #fef08a88 0%, #fdd36a88 100%)",
-                  borderRadius: "0.4em",
-                  padding: "0 0.16em",
-                  display: "inline",
-                  marginLeft: "4px",
-                  marginRight: "4px",
-                }}
-                className="font-semibold"
-              >
-                templates people found most useful
-              </span>
-              , built from experience and real user feedback. Hope they help you as much as they helped me!
-            </>
-          ].map((txt, i) => (
-            <motion.p
-              key={i}
-              className="text-gray-200 text-lg md:text-xl leading-relaxed mb-7 last:mb-0"
-              initial={{ opacity: 0, y: 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.18, duration: 0.62, ease: "easeOut" }}
-            >
-              {txt}
-            </motion.p>
-          ))}
-        </div>
-      </section>
+      {/* Gunakan komponen StorySection yang baru */}
+      <StorySection />
 
       {/* Section: Featured Templates */}
       <section className="max-w-6xl mx-auto mb-16 px-2 md:px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">Featured Templates</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-10 max-w-5xl mx-auto">
-          {featuredTemplates.map((tpl, idx) => (
+          {featuredTemplates.map((tpl) => (
             <div
               key={tpl.title}
               className="bg-zinc-900/90 rounded-3xl shadow-xl border border-zinc-600 hover:border-[#ffffff] transition-all duration-200 flex flex-col items-center px-3 py-6 md:py-7 min-h-[460px] group"
             >
-              {/* Slider */}
               <TemplateSlider images={tpl.images} />
 
               <h3 className="font-semibold text-xl md:text-2xl mt-6 mb-2 text-white text-center">{tpl.title}</h3>
@@ -469,13 +290,11 @@ export default function Home() {
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-[#46bdc6] to-[#00b88c] px-6 py-3 rounded-full text-base text-white font-bold shadow-lg hover:scale-105 transition focus-visible:outline-none"
               >
                 View Template
-                {/* Panah miring ke atas */}
                 <svg width="21" height="21" fill="none" viewBox="0 0 24 24" className="ml-1">
                   <path d="M5 19L19 5M19 5V17M19 5H7" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
             </div>
-
           ))}
         </div>
       </section>
@@ -487,7 +306,7 @@ export default function Home() {
           Explore my works, resources, tools, templates, and more handpicked to help you work smarter and grow faster.
         </p>
         <div className="grid md:grid-cols-3 gap-6">
-          {usefulLinks.map((l, i) => (
+          {usefulLinks.map((l) => (
             <a
               key={l.title}
               href={l.href}
@@ -526,7 +345,6 @@ export default function Home() {
           © {new Date().getFullYear()} Andre. Made with Next.js & ❤️
         </div>
       </footer>
-
     </main>
   );
 }
