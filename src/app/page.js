@@ -73,9 +73,9 @@ function SecHead({ title, meta }) {
 const card = "bg-white border border-line rounded-[14px] shadow-card";
 const btn =
   "btn-fx inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[10px] border text-sm font-semibold whitespace-nowrap";
-const btnPrimary = `${btn} btn-dark bg-ink text-white border-ink hover:bg-black`;
-const btnBrand = `${btn} btn-brand bg-acc text-white border-acc hover:bg-acc-d`;
-const btnOutline = `${btn} bg-white text-ink border-line hover:border-[#c9cdd6]`;
+const btnPrimary = `${btn} btn-dark bg-ink text-white border-ink`;
+const btnBrand = `${btn} btn-brand bg-acc text-white border-acc`;
+const btnOutline = `${btn} bg-white text-ink border-line`;
 
 export default function Home() {
   return (
