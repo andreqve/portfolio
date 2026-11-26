@@ -58,3 +58,32 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* Depth, same recipe as template.andre.id */
+@utility shadow-card {
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .06);
+}
+.btn-fx {
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .08);
+  transition: transform .15s, box-shadow .15s, background-color .15s, border-color .15s;
+}
+.btn-fx:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -10px rgba(16, 24, 40, .35), 0 2px 4px -2px rgba(16, 24, 40, .08);
+}
+.btn-dark { box-shadow: 0 10px 22px -12px var(--color-ink) }
+.btn-dark:hover { box-shadow: 0 14px 26px -12px var(--color-ink) }
+.btn-brand { box-shadow: 0 10px 22px -12px var(--color-acc) }
+.btn-brand:hover { box-shadow: 0 14px 26px -12px var(--color-acc) }
+.lift {
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.lift:hover {
+  transform: translateY(-2px);
+  border-color: #d5d9e0;
+  box-shadow: 0 12px 32px -14px rgba(16, 24, 40, .22), 0 2px 6px -2px rgba(16, 24, 40, .06);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-fx, .lift { transition: none }
+  .btn-fx:hover, .lift:hover { transform: none }
+}

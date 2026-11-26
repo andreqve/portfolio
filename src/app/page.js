@@ -44,7 +44,7 @@ const featuredTemplates = [
 
 const usefulLinks = [
   { title: "Monsy.app", desc: "Money management web app", href: "https://www.monsy.app" },
-  { title: "Google Sheet Templates", desc: "30+ best template collections", href: "https://template.andre.id/koleksi" },
+  { title: "Google Sheet Templates", desc: "30+ best template collections", href: "https://template.andre.id" },
   { title: "Personal Blog", desc: "Articles, insights, and tips", href: "https://andre.id/blog/marketing/" },
   { title: "Free Udemy Courses", desc: "Learn new skills for free", href: "https://go.andre.id/udemy" },
   { title: "Food Recommendation", desc: "Curated list of best eats & coffee", href: "https://go.andre.id/tempatmakan" },
@@ -70,10 +70,11 @@ function SecHead({ title, meta }) {
   );
 }
 
-const card = "bg-white border border-line rounded-[14px]";
+const card = "bg-white border border-line rounded-[14px] shadow-card";
 const btn =
-  "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[10px] border text-sm font-semibold whitespace-nowrap transition-colors";
-const btnPrimary = `${btn} bg-ink text-white border-ink hover:bg-black`;
+  "btn-fx inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[10px] border text-sm font-semibold whitespace-nowrap";
+const btnPrimary = `${btn} btn-dark bg-ink text-white border-ink hover:bg-black`;
+const btnBrand = `${btn} btn-brand bg-acc text-white border-acc hover:bg-acc-d`;
 const btnOutline = `${btn} bg-white text-ink border-line hover:border-[#c9cdd6]`;
 
 export default function Home() {
@@ -87,7 +88,9 @@ export default function Home() {
             <a href="#templates" className="px-2.5 py-2 rounded-lg hover:bg-white">Templates</a>
             <a href="#links" className="px-2.5 py-2 rounded-lg hover:bg-white">Links</a>
           </nav>
-          <a href="mailto:hai@andre.id" className={`${btnPrimary} ml-auto`}>Send email</a>
+          <a href="https://template.andre.id" target="_blank" rel="noopener noreferrer" className={`${btnPrimary} ml-auto`}>
+            Templates <Arrow />
+          </a>
         </div>
       </header>
 
@@ -116,7 +119,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-wrap gap-2">
-            <a href="https://template.andre.id/koleksi" target="_blank" rel="noopener noreferrer" className={btnPrimary}>
+            <a href="https://template.andre.id" target="_blank" rel="noopener noreferrer" className={btnPrimary}>
               Browse templates <Arrow />
             </a>
             <a href="https://www.linkedin.com/in/petrusandre" target="_blank" rel="noopener noreferrer" className={btnOutline}>
@@ -197,7 +200,7 @@ export default function Home() {
           <SecHead title="Featured templates" meta="swipe for more previews" />
           <div className="grid md:grid-cols-3 gap-4">
             {featuredTemplates.map((tpl) => (
-              <article key={tpl.title} className={`${card} overflow-hidden flex flex-col`}>
+              <article key={tpl.title} className={`${card} lift overflow-hidden flex flex-col`}>
                 <div className="strip flex overflow-x-auto border-b border-line bg-line2">
                   {tpl.images.map((src, i) => (
                     <Image
@@ -222,7 +225,7 @@ export default function Home() {
                     href={tpl.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-acc hover:text-acc-d"
+                    className={`${btnBrand} self-start`}
                   >
                     View template <Arrow />
                   </a>
@@ -264,7 +267,6 @@ export default function Home() {
         <div className="max-w-[960px] mx-auto px-5 py-6 flex flex-col sm:flex-row gap-3 sm:items-center justify-between text-sm">
           <span className="text-muted">© {new Date().getFullYear()} Andre</span>
           <div className="flex gap-3 -mx-2 text-ink2 font-medium">
-            <a href="mailto:hai@andre.id" className="px-2 py-2 hover:text-ink">Email</a>
             <a href="https://www.linkedin.com/in/petrusandre" target="_blank" rel="noopener noreferrer" className="px-2 py-2 hover:text-ink">LinkedIn</a>
             <a href="https://x.com/andreqve" target="_blank" rel="noopener noreferrer" className="px-2 py-2 hover:text-ink">X</a>
           </div>
