@@ -1,14 +1,11 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = localFont({
+  src: "../fonts/Inter.woff2",
+  weight: "100 900",
+  display: "swap",
+  variable: "--font-inter",
 });
 
 export const metadata = {
@@ -50,26 +47,21 @@ export const metadata = {
       "Digital marketer, SaaS builder, and Google Sheets expert. Discover top templates, marketing experience, and more.",
     images: ["https://andre.id/image/andre.jpg"]
   },
-  // Tambahkan bagian ini:
   other: {
     "google-site-verification": "IamODqoYpyicMTnNcgn31-3Y3s939AZs4mmt6L7r8DU"
   }
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f7f7f8",
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        {/* Meta tags for SEO & mobile */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* Next.js akan auto inject title, desc, OpenGraph, dsb dari metadata */}
-        {/* Favicon otomatis dari /public/favicon.ico */}
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="en" className={inter.variable}>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
